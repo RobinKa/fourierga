@@ -12,11 +12,11 @@
 
 	<h3>Functions</h3>
 	<div>
-		Input(t): <input id="input" type="text" style="width: 600px;" value="e1.gp(Math.cos(8*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))"/>
+		Input(t): <input id="input" type="text" style="width: 600px;" value="e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))"/>
 	</div>
 	<br />
 	<div>
-		Transform(t): <input id="transform" type="text" style="width: 600px;" value="Math.sin(w*t)"/>
+		Transform(t): <input id="transform" type="text" style="width: 600px;" value="e2.gp(Math.cos(w*t)).add(e1.gp(Math.sin(w*t)))"/>
 	</div>
 
 	<div>
@@ -40,7 +40,18 @@
 
 		<canvas id="fourierE2Canvas" width="400" height="300" style="border: 1px solid black;">
 		</canvas>
-	</div> 
+
+		<canvas id="fourierE12Canvas" width="400" height="300" style="border: 1px solid black;">
+		</canvas>
+	</div>
+
+	<div>
+		<h3>Examples</h3>
+		<button id="example1">Spinning in circle, together</button>
+		<button id="example2">Spinning in circle, against</button>
+		<button id="example3">Standard fourier transform</button>
+		<button id="example4">Ellipse / Circle, together</button>
+	</div>
 
 	<script src="versor.js"></script>
 	<script src="script.js"></script>

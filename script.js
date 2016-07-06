@@ -28,6 +28,8 @@ var fourierE1Canvas = document.getElementById("fourierE1Canvas");
 var fourierE1Ctx = fourierE1Canvas.getContext("2d");
 var fourierE2Canvas = document.getElementById("fourierE2Canvas");
 var fourierE2Ctx = fourierE2Canvas.getContext("2d");
+var fourierE12Canvas = document.getElementById("fourierE12Canvas");
+var fourierE12Ctx = fourierE12Canvas.getContext("2d");
 
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -78,6 +80,7 @@ function startCalculate() {
 		aw[0] /= fourierSize;
 		aw[1] /= fourierSize;
 		aw[2] /= fourierSize;
+		aw[3] /= fourierSize;
 
 		amplitudes.push(aw);
 	}
@@ -85,23 +88,18 @@ function startCalculate() {
 	clear(fourierScalarCtx, fourierScalarCanvas);
 	clear(fourierE1Ctx, fourierE1Canvas);
 	clear(fourierE2Ctx, fourierE2Canvas);
+	clear(fourierE12Ctx, fourierE12Canvas);
 
 	drawText(fourierScalarCtx, 10, 10, "Scalar");
 	drawText(fourierE1Ctx, 10, 10, "E1");
 	drawText(fourierE2Ctx, 10, 10, "E2");
+	drawText(fourierE12Ctx, 10, 10, "E12");
 
 	for(var i = 0; i < fourierSize; i++) {
-		console.log(amplitudes[i]);
-
-		for(var j = 0; j < 3; j++) {
-			if(!isNumeric(amplitudes[i][j])) {
-				amplitudes[i][j] = 0;
-			}
-		}
-
-		drawCircle(fourierScalarCtx, fourierScalarCanvas.width * i / fourierSize, 0.5 * (1 - amplitudes[i][0]) * fourierScalarCanvas.height);
-		drawCircle(fourierE1Ctx, fourierE1Canvas.width * i / fourierSize, 0.5 * (1 - amplitudes[i][1]) * fourierE1Canvas.height);
-		drawCircle(fourierE2Ctx, fourierE2Canvas.width * i / fourierSize, 0.5 * (1 - amplitudes[i][2]) * fourierE2Canvas.height);
+		drawCircle(fourierScalarCtx, fourierScalarCanvas.width * i / fourierSize, 0.5 * fourierScalarCanvas.height - 0.4 * fourierScalarCanvas.height * amplitudes[i][0]);
+		drawCircle(fourierE1Ctx, fourierE1Canvas.width * i / fourierSize, 0.5 * fourierE1Canvas.height - 0.4 * fourierE1Canvas.height * amplitudes[i][1]);
+		drawCircle(fourierE2Ctx, fourierE2Canvas.width * i / fourierSize, 0.5 * fourierE2Canvas.height - 0.4 * fourierE2Canvas.height * amplitudes[i][2]);
+		drawCircle(fourierE12Ctx, fourierE12Canvas.width * i / fourierSize, 0.5 * fourierE12Canvas.height - 0.4 * fourierE12Canvas.height * amplitudes[i][3]);
 	}
 
 	tick();
@@ -127,3 +125,34 @@ function tick() {
 }
 
 document.getElementById("calculate").onclick = startCalculate;
+document.getElementById("example1").onclick = function() {
+	document.getElementById("fouriersize").value = 64;
+	document.getElementById("samplerate").value = 16;
+	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))";
+	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
+	startCalculate();
+};
+
+document.getElementById("example2").onclick = function() {
+	document.getElementById("fouriersize").value = 64;
+	document.getElementById("samplerate").value = 16;
+	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))";
+	document.getElementById("transform").value = "e2.gp(Math.cos(w*t)).add(e1.gp(Math.sin(w*t)))";
+	startCalculate();
+};
+
+document.getElementById("example3").onclick = function() {
+	document.getElementById("fouriersize").value = 64;
+	document.getElementById("samplerate").value = 16;
+	document.getElementById("input").value = "e1.gp(Math.sin(2*Math.PI*2*t))";
+	document.getElementById("transform").value = "e1.gp(Math.sin(w*t))";
+	startCalculate();
+};
+
+document.getElementById("example4").onclick = function() {
+	document.getElementById("fouriersize").value = 64;
+	document.getElementById("samplerate").value = 16;
+	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(0.5 * Math.sin(2*Math.PI*2*t)))";
+	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
+	startCalculate();
+};
