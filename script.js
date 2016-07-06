@@ -113,11 +113,13 @@ function tick() {
 
 	clear(inputCtx, inputCanvas);
 	draw(inputCtx, inputCanvas, tickInput);
-	drawText(inputCtx, 10, 10, currentTick);
+	drawText(inputCtx, 5, 10, "Input function");
+	drawText(inputCtx, 5, 25, "t: " + t);
 
 	clear(transformCtx, transformCanvas);
 	draw(transformCtx, transformCanvas, tickTransform);
-	drawText(transformCtx, 10, 10, currentTick);
+	drawText(transformCtx, 5, 10, "Transform function");
+	drawText(transformCtx, 5, 25, "t: " + t);
 
 	currentTick = (currentTick + 0.1) % fourierSize;
 
@@ -156,3 +158,5 @@ document.getElementById("example4").onclick = function() {
 	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
 	startCalculate();
 };
+
+startCalculate();
