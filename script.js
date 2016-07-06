@@ -1,5 +1,8 @@
 var sp = versor.create({
-	metric: [1, 1, 1],
+	metric: [1, 1],
+	types: [
+        { name:"MV", bases:["s", "e1", "e2", "e12"] },
+    ]
 });
 
 console.log(sp.basis);
@@ -7,11 +10,7 @@ console.log(sp.types);
 
 var e1 = sp.e1(1);
 var e2 = sp.e2(1);
-var e3 = sp.e3(1);
 var e12 = e1.gp(e2);
-var e23 = e2.gp(e3);
-var e13 = e1.gp(e3);
-var e123 = e12.gp(e3);
 
 var currentTick = 0;
 var input = null;
@@ -46,16 +45,9 @@ function drawText(ctx, x, y, text) {
 }
 
 function draw(ctx, canvas, v) {
-	var x = v[0];
-	var y = v[1];
-
-	if(!isNumeric(x)) {
-		x = 0;
-	}
-
-	if(!isNumeric(y)) {
-		y = 0;
-	}
+	var a = sp.MV(v);
+	var x = a[1];
+	var y = a[2];
 
 	drawCircle(ctx, canvas.width * 0.5 + x * canvas.width * 0.4, canvas.height * 0.5 + y * canvas.height * 0.4);
 }
@@ -80,6 +72,8 @@ function startCalculate() {
 			var t = n  * 1.0 / sampleRate;
 			aw = input(t).gp(transform(t, w)).add(aw);
 		}
+
+		aw = sp.MV(aw);
 
 		aw[0] /= fourierSize;
 		aw[1] /= fourierSize;
