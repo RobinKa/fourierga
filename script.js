@@ -121,39 +121,48 @@ function tick() {
 	drawText(transformCtx, 5, 10, "Transform function");
 	drawText(transformCtx, 5, 25, "t: " + t);
 
-	currentTick = (currentTick + 0.1) % fourierSize;
+	currentTick = (currentTick + 0.2) % fourierSize;
 
 	setTimeout(tick, 50);
 }
 
 document.getElementById("calculate").onclick = startCalculate;
+
 document.getElementById("example1").onclick = function() {
-	document.getElementById("fouriersize").value = 64;
-	document.getElementById("samplerate").value = 16;
+	document.getElementById("fouriersize").value = 32;
+	document.getElementById("samplerate").value = 32;
 	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))";
 	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
 	startCalculate();
 };
 
 document.getElementById("example2").onclick = function() {
-	document.getElementById("fouriersize").value = 64;
-	document.getElementById("samplerate").value = 16;
+	document.getElementById("fouriersize").value = 32;
+	document.getElementById("samplerate").value = 32;
+	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*4*t)).add(e2.gp(Math.sin(2*Math.PI*4*t)))";
+	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
+	startCalculate();
+};
+
+document.getElementById("example3").onclick = function() {
+	document.getElementById("fouriersize").value = 32;
+	document.getElementById("samplerate").value = 32;
 	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(Math.sin(2*Math.PI*2*t)))";
 	document.getElementById("transform").value = "e2.gp(Math.cos(w*t)).add(e1.gp(Math.sin(w*t)))";
 	startCalculate();
 };
 
-document.getElementById("example3").onclick = function() {
-	document.getElementById("fouriersize").value = 64;
-	document.getElementById("samplerate").value = 16;
+document.getElementById("example4").onclick = function() {
+	document.getElementById("fouriersize").value = 32;
+	document.getElementById("samplerate").value = 32;
 	document.getElementById("input").value = "e1.gp(Math.sin(2*Math.PI*2*t))";
 	document.getElementById("transform").value = "e1.gp(Math.sin(w*t))";
 	startCalculate();
 };
 
-document.getElementById("example4").onclick = function() {
-	document.getElementById("fouriersize").value = 64;
-	document.getElementById("samplerate").value = 16;
+document.getElementById("example5").onclick = function() {
+	document.getElementById("fouriersize").value = 32;
+	document.getElementById("samplerate").value = 32;
 	document.getElementById("input").value = "e1.gp(Math.cos(2*Math.PI*2*t)).add(e2.gp(0.5 * Math.sin(2*Math.PI*2*t)))";
 	document.getElementById("transform").value = "e1.gp(Math.cos(w*t)).add(e2.gp(Math.sin(w*t)))";
 	startCalculate();
