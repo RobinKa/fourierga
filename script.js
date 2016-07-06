@@ -31,6 +31,8 @@ var fourierE2Ctx = fourierE2Canvas.getContext("2d");
 var fourierE12Canvas = document.getElementById("fourierE12Canvas");
 var fourierE12Ctx = fourierE12Canvas.getContext("2d");
 
+var tickTimerId = null;
+
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -123,7 +125,11 @@ function tick() {
 
 	currentTick = (currentTick + 0.2) % fourierSize;
 
-	setTimeout(tick, 50);
+	if(tickTimerId) {
+		clearTimeout(tickTimerId);
+	}
+
+	tickTimerId = setTimeout(tick, 50);
 }
 
 document.getElementById("calculate").onclick = startCalculate;
